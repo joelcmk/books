@@ -1,38 +1,50 @@
-
+/* eslint-disable react/jsx-filename-extension */
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
-
-  const [data, setData] = useState();
-  const [test, setTest] = useState({});
+  const [books, setBooks] = useState();
+  const [value, setValue] = useState('');
+  const [search, setSearch] = useState('javascript');
 
   useEffect(() => {
-    fetch('https://www.googleapis.com/books/v1/volumes?q=pride+prejudice&download=epub&key')
-      .then(response => response.json())
-      .then(data => setData(data));
-  }, []);
+    fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&download=epub&key`)
+      .then((response) => response.json())
+      .then((data) => setBooks(data));
+  }, [search]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSearch(value);
+  };
 
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
 
-  if (data) {
+  if (books) {
     return (
       <div className="App">
-        {data.items.map(book => (
-          <div>
-            {book.volumeInfo.title}
-          </div>
-        ))}
+        <form onSubmit={handleSubmit}>
+          <input type="text" value={value} onChange={handleChange} />
+          <input type="submit" value="submit" />
+        </form>
+        <div>
+          {books.items.map((book) => (
+            <div>
+              <img src={book.volumeInfo.imageLinks.thumbnail} alt="" />
+              {book.volumeInfo.title}
+            </div>
+          ))}
+        </div>
       </div>
     );
-  } else {
-    return (
-      <div>
-        Loading...
-    </div>
-    )
   }
-
+  return (
+    <div>
+      Loading...
+    </div>
+  );
 }
 
 export default App;
