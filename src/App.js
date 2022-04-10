@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { useState, useEffect } from 'react';
+import Book from './components/Book';
 import './App.css';
 
 function App() {
@@ -29,12 +30,9 @@ function App() {
           <input type="text" value={value} onChange={handleChange} />
           <input type="submit" value="submit" />
         </form>
-        <div>
+        <div className="books">
           {books.items.map((book) => (
-            <div>
-              <img src={book.volumeInfo.imageLinks.thumbnail} alt="" />
-              {book.volumeInfo.title}
-            </div>
+            <Book book={book} />
           ))}
         </div>
       </div>

@@ -1,0 +1,10 @@
+body {
+  background-color: #E3E5EC;
+}
+
+.books {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: flex-end;
+}
